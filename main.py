@@ -10,6 +10,11 @@ jinja_env = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
+class MainPageHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_env.get_template('templates/main.html')
+        self.response.write(template.render())
+
 class SearchFormHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_env.get_template('templates/form.html')
@@ -29,6 +34,6 @@ class RecipeDisplayHandler(webapp2.RequestHandler):
         }))
 
 app = webapp2.WSGIApplication([
-    ('/', SearchFormHandler),
+    ('/', MainPageHandler),
     ('/recipe', RecipeDisplayHandler),
 ], debug=True)
